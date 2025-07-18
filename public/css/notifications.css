@@ -1,0 +1,121 @@
+.notification-item {
+    border-bottom: 1px solid #e3e6f0;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fc !important;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item .icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Badge Counter Animation */
+
+.badge-counter {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* Unread notification styling */
+
+.notification-item.bg-light {
+    background-color: rgba(78, 115, 223, 0.05) !important;
+    border-left: 3px solid #4e73df;
+}
+
+
+/* Loading spinner */
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+/* Notification types */
+
+.icon-circle.bg-primary {
+    background-color: #4e73df !important;
+}
+
+.icon-circle.bg-success {
+    background-color: #1cc88a !important;
+}
+
+.icon-circle.bg-warning {
+    background-color: #f6c23e !important;
+}
+
+.icon-circle.bg-danger {
+    background-color: #e74a3b !important;
+}
+
+.icon-circle.bg-info {
+    background-color: #36b9cc !important;
+}
+
+.icon-circle.bg-secondary {
+    background-color: #858796 !important;
+}
+
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .dropdown-list {
+        width: 300px !important;
+        max-height: 300px;
+    }
+    .notification-item {
+        padding: 0.75rem;
+    }
+    .notification-item .icon-circle {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+
+/* Custom scrollbar for notification dropdown */
+
+.dropdown-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
