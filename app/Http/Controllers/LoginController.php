@@ -30,7 +30,7 @@ class LoginController extends Controller
         // Coba autentikasi pengguna
         if (!Auth::attempt($credentials)) {
             return back()->withErrors([
-                'email' => 'Data login yang dimasukkan tidak sesuai dengan catatan kami.',
+                'email' => 'Email atau kata sandi salah.',
             ]);
         }
 

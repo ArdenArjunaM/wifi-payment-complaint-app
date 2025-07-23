@@ -116,6 +116,11 @@ Route::delete('/datatagihan/{id}', [TagihanController::class, 'destroy'])->name(
 Route::get('/datatagihan/{id}/kirim', [TagihanController::class, 'kirim'])->name('dashboard.datatagihan.kirim');
 Route::patch('/datatagihan/{id}/mark-as-paid', [TagihanController::class, 'markAsPaid'])->name('dashboard.datatagihan.markAsPaid');
 Route::post('/generate-monthly', [TagihanController::class, 'generateMonthly'])->name('dashboard.datatagihan.generateMonthly');
+// Route untuk export PDF dan Excel
+Route::get('/tagihan/export/pdf', [TagihanController::class, 'exportPdf'])->name('tagihan.export.pdf');
+Route::get('/tagihan/export/excel', [TagihanController::class, 'exportExcel'])->name('tagihan.export.excel');
+
+
 
 // Route dashboard
 Route::get('/dashboard/datatagihan', [TagihanController::class, 'index'])->name('dashboard.dashboard.datatagihan.index');

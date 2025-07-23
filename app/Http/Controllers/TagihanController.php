@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\TagihanExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Tagihan;
 use App\Models\User;
 use App\Models\PaketWifi;
@@ -11,6 +14,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+
 
 class TagihanController extends Controller
 {
@@ -42,6 +46,30 @@ class TagihanController extends Controller
 
         return view('superadmin.datatagihan.index', compact('tagihan'));
     }
+
+    public function exportPdf()
+{
+    // Gunakan relasi yang benar sesuai dengan model Tagihan Anda
+    $tagihan = Tagihan::with(['user', 'paketWifi', 'statusTagihan', 'pengajuan'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+    // Load view untuk PDF
+    $pdf = Pdf::loadView('dashboard.datatagihan.pdf', compact('tagihan'));
+    
+    // Set paper size dan orientasi
+    $pdf->setPaper('A4', 'landscape');
+    
+    // Download PDF
+    return $pdf->download('data-tagihan-' . date('Y-m-d') . '.pdf');
+}
+
+public function exportExcel(Request $request)
+{
+    $filename = 'Laporan_Tagihan_' . date('d-m-Y_H-i-s') . '.xlsx';
+    
+    return Excel::download(new TagihanExport($request), $filename);
+}
 
     /**
      * Menampilkan form untuk membuat tagihan baru
@@ -198,6 +226,42 @@ public function createTeknisi()
                 ->with('error', 'Gagal membuat tagihan. Silakan coba lagi.');
         }
     }
+
+public function userTagihanDownloadInvoice($id, Request $request)
+{
+    try {
+        // Cari data tagihan berdasarkan ID
+        $tagihan = Tagihan::with('user')->findOrFail($id);
+        
+        // PERBAIKAN: Gunakan nama field yang konsisten
+        // Pastikan tagihan milik user yang sedang login
+        if ($tagihan->users_id_user !== auth()->id()) {
+            abort(403, 'Tidak diizinkan mengakses invoice ini');
+        }
+
+        // Jika ada parameter download=1, maka download PDF
+        if ($request->get('download') == '1') {
+            $pdf = PDF::loadView('invoice', compact('tagihan'));
+            // PERBAIKAN: Gunakan ID yang benar untuk filename
+            $filename = 'invoice-' . $tagihan->id . '-' . date('Y-m-d') . '.pdf';
+            return $pdf->download($filename);
+        }
+
+        // Jika tidak, tampilkan di browser
+        return view('invoice', compact('tagihan'));
+
+    } catch (\Exception $e) {
+        Log::error('Error processing invoice: ' . $e->getMessage());
+        
+        // PERBAIKAN: Pilih salah satu opsi di bawah ini (HAPUS yang lain)
+        
+            
+        // OPSI 2: Redirect dengan parameter ID
+        return redirect()->route('user.tagihan.invoice', ['id' => $id])
+            ->with('error', 'Invoice tidak dapat diproses');
+            
+    }
+}
 
 
  

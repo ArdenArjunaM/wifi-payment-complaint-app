@@ -505,9 +505,6 @@
                             <a href="/datatagihan/edit/{{ $tagihan->id_tagihan }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Edit Tagihan
                             </a>
-                            <button class="btn btn-danger btn-sm" onclick="deleteBill()">
-                                <i class="fas fa-trash"></i> Hapus Tagihan
-                            </button>
                         </div>
                     </div>
                 </div>

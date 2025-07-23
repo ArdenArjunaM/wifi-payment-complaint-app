@@ -277,8 +277,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Data Tagihan</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        
                     </div>
 
                     <!-- Content Row - Statistics Cards -->
@@ -374,18 +373,47 @@
 
 
 <!-- Content Row -->
+<!-- Content Row -->
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">Daftar Tagihan</h6>
-        <!-- Tombol Buat Tagihan Manual -->
-        <div>
-            <!-- <a href="{{ route('superadmin.datatagihan.create') }}" class="btn btn-info btn-sm me-2">
+        
+        <!-- Tombol Buat Tagihan Manual, Generate, dan Export Dropdown -->
+        <div class="d-flex flex-wrap gap-2">
+
+            <!-- Buat Tagihan Manual -->
+            <a href="{{ route('dashboard.datatagihan.create') }}" class="btn btn-info btn-sm">
                 <i class="fas fa-plus"></i> Buat Tagihan Manual
-            </a> -->
+            </a>
+
+            <!-- Generate Tagihan Bulanan -->
             <button class="btn btn-secondary btn-sm" onclick="generateMonthlyBills()" title="Generate tagihan bulanan untuk semua pelanggan aktif">
                 <i class="fas fa-calendar-alt"></i> Generate Tagihan Bulanan
             </button>
+
+            <!-- Export Dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-download"></i> Export Data
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="exportDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('tagihan.export.pdf') }}">
+                            <i class="fas fa-file-pdf text-danger me-2"></i> Export PDF
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('tagihan.export.excel') }}">
+                            <i class="fas fa-file-excel text-success me-2"></i> Export Excel
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
+   
+
+
     </div>
     <div class="card-body">
         <!-- Success Message -->
@@ -592,11 +620,7 @@
                                           method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" 
-                                                onclick="return confirm('Yakin ingin menghapus tagihan ini?')" 
-                                                title="Hapus Tagihan">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
+                                        
                                     </form>
                                 @endif
                             </div>
