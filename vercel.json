@@ -1,8 +1,32 @@
 {
-    "NODE_ENV": "production",
+  "version": 2,
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.6.0"
+    }
+  },
+  "routes": [
+    {
+      "src": "/img/(.*)",
+      "dest": "/public/img/"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
+  ],
+  "env": {
+    "APP_ENV": "production",
     "APP_DEBUG": "false",
     "APP_URL": "https://yourproductionurl.com",
     "APP_KEY": "base64:TGaVaXwhWgjn9akhE4SCSIjGG/cQqvICUQ+PgLA3Bs0=",
+
+    "APP_CONFIG_CACHE": "/tmp/config.php",
+    "APP_EVENTS_CACHE": "/tmp/events.php",
+    "APP_PACKAGES_CACHE": "/tmp/packages.php",
+    "APP_ROUTES_CACHE": "/tmp/routes.php",
+    "APP_SERVICES_CACHE": "/tmp/services.php",
+    "VIEW_COMPILED_PATH": "/tmp",
 
     "CACHE_DRIVER": "array",
     "LOG_CHANNEL": "stderr",
@@ -35,4 +59,6 @@
     "MIDTRANS_IS_PRODUCTION": "false",
     "MIDTRANS_IS_SANITIZED": "true",
     "MIDTRANS_IS_3DS": "true"
+  },
+  "outputDirectory": "public"
 }
